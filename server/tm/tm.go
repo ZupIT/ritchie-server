@@ -3,10 +3,12 @@ package tm
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"net/http"
 	"strings"
-	"time"
+
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 
 	"ritchie-server/server"
 )
@@ -93,15 +95,15 @@ func FindRepo(repos []server.Repository, repoName string) (server.Repository, er
 
 func treeRemote(tPath string, repo server.Repository) (server.Tree, error) {
 	var tree server.Tree
-	tURL := fmt.Sprintf("%s%s", repo.Remote, tPath)
-	t, err := loadTreeFile(tURL)
+	//tURL := fmt.Sprintf("%s%s", repo.Remote, tPath)
+	t, err := loadTreeFileAws(tPath)
 	if err != nil {
 		return tree, err
 	}
 	return t, nil
 }
 
-func loadTreeFile(url string) (server.Tree, error) {
+/*func loadTreeFile(url string) (server.Tree, error) {
 	var response server.Tree
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
@@ -123,6 +125,32 @@ func loadTreeFile(url string) (server.Tree, error) {
 		return response, err
 	}
 	if err := json.Unmarshal(bodyBytes, &response); err != nil {
+		return response, err
+	}
+	return response, nil
+}*/
+
+func loadTreeFileAws(treePath string) (server.Tree, error) {
+	var response server.Tree
+	bucket := "ritchie-test-bucket234376412767550"
+	sess, err := session.NewSession(&aws.Config{
+		Region: aws.String("sa-east-1")},
+	)
+	if err != nil {
+		return response, err
+	}
+	buf := &aws.WriteAtBuffer{}
+	downloader := s3manager.NewDownloader(sess)
+	_, err = downloader.Download(buf,
+		&s3.GetObjectInput{
+			Bucket: aws.String(bucket),
+			Key:    aws.String(treePath),
+		})
+	if err != nil {
+		return response, err
+	}
+
+	if err := json.Unmarshal(buf.Bytes(), &response); err != nil {
 		return response, err
 	}
 	return response, nil

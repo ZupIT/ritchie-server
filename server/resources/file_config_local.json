@@ -12,22 +12,30 @@
     },
     "repositories":
      [
-       {
-         "name": "commons",
-         "priority": 0,
-         "treePath": "/tree/tree.json",
-         "remote" : "http://localhost:8882",
-         "serverUrl" : "http://localhost:3000",
-         "replaceRepoUrl" : "http://localhost:3000/formulas"
-       },
-       {
-         "name": "zup",
-         "priority": 1,
-         "treePath": "/tree/tree-zup.json",
-         "remote" : "http://localhost:8882",
-         "serverUrl" : "http://localhost:3000",
-         "replaceRepoUrl" : "http://localhost:3000/formulas"
-       }
+         {
+             "name": "test-repo",
+             "priority": 0,
+             "treePath": "/tree/tree.json",
+             "remote": "https://ritchie-test-bucket234376412767550.s3-sa-east-1.amazonaws.com",
+             "serverUrl": "http://localhost:3000",
+             "replaceRepoUrl": "http://localhost:3000/formulas"
+         },
+         {
+             "name": "commons",
+             "priority": 1,
+             "treePath": "/tree/tree.json",
+             "remote": "http://localhost:8882",
+             "serverUrl": "http://localhost:3000",
+             "replaceRepoUrl": "http://localhost:3000/formulas"
+         },
+         {
+             "name": "zup",
+             "priority": 2,
+             "treePath": "/tree/tree-zup.json",
+             "remote": "http://localhost:8882",
+             "serverUrl": "http://localhost:3000",
+             "replaceRepoUrl": "http://localhost:3000/formulas"
+         }
      ],
 
     "oauth" :{
