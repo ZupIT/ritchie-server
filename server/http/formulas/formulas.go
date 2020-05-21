@@ -84,11 +84,13 @@ func (lh Handler) processGet(w http.ResponseWriter, r *http.Request) {
 	}
 	buf := &aws.WriteAtBuffer{}
 	downloader := s3manager.NewDownloader(sess)
+	s3obj := s3.GetObjectInput{
+		Bucket: aws.String(bucket),
+		Key:    aws.String(r.URL.Path),
+	}
 	_, err = downloader.Download(buf,
-		&s3.GetObjectInput{
-			Bucket: aws.String(bucket),
-			Key:    aws.String(r.URL.Path),
-		})
+		&s3obj)
+	log.Printf("S3 obj: %v", s3obj)
 	if err != nil {
 		log.Printf("Failed to read bucket: %s, error: %v", r.URL.Path, err)
 		w.WriteHeader(http.StatusInternalServerError)
