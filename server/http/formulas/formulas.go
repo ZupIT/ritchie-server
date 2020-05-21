@@ -3,8 +3,11 @@ package formulas
 import (
 	"log"
 	"net/http"
-	"net/http/httputil"
-	"net/url"
+
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 
 	"ritchie-server/server"
 	"ritchie-server/server/tm"
@@ -70,11 +73,26 @@ func (lh Handler) processGet(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
-	u, _ := url.Parse(repo.Remote)
-	proxy := httputil.NewSingleHostReverseProxy(u)
-	r.URL.Host = u.Host
-	r.URL.Scheme = u.Scheme
-	r.Header.Set("X-Forwarded-Host", r.Header.Get("Host"))
-	r.Host = u.Host
-	proxy.ServeHTTP(w, r)
+	bucket := "ritchie-test-bucket234376412767550"
+	sess, err := session.NewSession(&aws.Config{
+		Region: aws.String("sa-east-1")},
+	)
+	if err != nil {
+		log.Printf("Failed to create session aws to path: %s, error: %v", r.URL.Path, err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	buf := &aws.WriteAtBuffer{}
+	downloader := s3manager.NewDownloader(sess)
+	_, err = downloader.Download(buf,
+		&s3.GetObjectInput{
+			Bucket: aws.String(bucket),
+			Key:    aws.String(r.URL.Path),
+		})
+	if err != nil {
+		log.Printf("Failed to read bucket: %s, error: %v", r.URL.Path, err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	w.Write(buf.Bytes())
 }
