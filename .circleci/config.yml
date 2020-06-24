@@ -223,7 +223,7 @@ jobs:
   release:
     environment:
       <<: *ENVIRONMENT
-    executor: delivery-executor
+    executor: release-executor
     steps:
       - checkout
       - run:
