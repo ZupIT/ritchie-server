@@ -241,7 +241,7 @@ jobs:
       - run:
           name: Releasing
           command: |
-            pip install aws
+            pip install awscli
             . ./.circleci/scripts/version.sh
             make delivery-file
 
