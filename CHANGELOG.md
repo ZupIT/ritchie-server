@@ -85,7 +85,9 @@
 
 - Fix logging [\#29](https://github.com/ZupIT/ritchie-server/pull/29) ([ernelio](https://github.com/ernelio))
 - rit\_user and rit\_admin [\#28](https://github.com/ZupIT/ritchie-server/pull/28) ([ernelio](https://github.com/ernelio))
+- Feature/access control for formulas [\#27](https://github.com/ZupIT/ritchie-server/pull/27) ([marcosgmgm](https://github.com/marcosgmgm))
 - Create ritchie-bot-config.yml [\#26](https://github.com/ZupIT/ritchie-server/pull/26) ([kaduartur](https://github.com/kaduartur))
+- added build linux [\#20](https://github.com/ZupIT/ritchie-server/pull/20) ([marcosgmgm](https://github.com/marcosgmgm))
 
 ## [1.0.0-beta.1](https://github.com/zupit/ritchie-server/tree/1.0.0-beta.1) (2020-05-06)
 
@@ -105,8 +107,6 @@
 
 **Merged pull requests:**
 
-- Feature/access control for formulas [\#27](https://github.com/ZupIT/ritchie-server/pull/27) ([marcosgmgm](https://github.com/marcosgmgm))
-- added build linux [\#20](https://github.com/ZupIT/ritchie-server/pull/20) ([marcosgmgm](https://github.com/marcosgmgm))
 - Remove docker in step circleci [\#19](https://github.com/ZupIT/ritchie-server/pull/19) ([ernelio](https://github.com/ernelio))
 - adding the / path so the set server works properly [\#18](https://github.com/ZupIT/ritchie-server/pull/18) ([viniciusramosdefaria](https://github.com/viniciusramosdefaria))
 - changes [\#17](https://github.com/ZupIT/ritchie-server/pull/17) ([viniciusramosdefaria](https://github.com/viniciusramosdefaria))
