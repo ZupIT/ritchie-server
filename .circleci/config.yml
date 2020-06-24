@@ -191,7 +191,7 @@ jobs:
             . ./.circleci/scripts/registry.sh
             make build-container
       - run:
-          name: Pushing docker image to registry DOCKERHUB
+          name: Pushing docker image to registry Dockerhub
           command: |
             . ./.circleci/scripts/version.sh
             . ./.circleci/scripts/registry.sh
@@ -242,6 +242,7 @@ jobs:
           name: Releasing
           command: |
             pip install awscli
+            . ./.circleci/scripts/credentials.sh
             . ./.circleci/scripts/version.sh
             make delivery-file
 
